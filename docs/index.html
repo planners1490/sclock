@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>scLock by relay — Supercluster Polymorphic VM & Apple Secure Enclave Lock</title>
+  <style>
+    :root {
+      --bg: #07090e;
+      --card: #0f1420;
+      --border: #1e293b;
+      --accent: #38bdf8;
+      --accent-2: #a855f7;
+      --success: #22c55e;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Inter", "Pretendard", monospace, sans-serif;
+      background: radial-gradient(circle at 50% 0%, #111a2e 0%, var(--bg) 65%);
+      color: var(--text);
+      line-height: 1.6;
+      padding-bottom: 80px;
+    }
+    .container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+    header {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 24px 0; border-bottom: 1px solid var(--border);
+    }
+    .logo {
+      font-size: 1.35rem; font-weight: 800; letter-spacing: -0.5px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .lang-btn {
+      background: var(--card); color: var(--text); border: 1px solid var(--border);
+      padding: 6px 14px; border-radius: 8px; cursor: pointer; font-size: 0.82rem; font-weight: 600;
+    }
+    .lang-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .badge {
+      display: inline-block; padding: 6px 14px; border-radius: 999px;
+      font-size: 0.8rem; font-weight: 600;
+      background: rgba(56, 189, 248, 0.12); color: var(--accent);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      margin-bottom: 20px;
+    }
+    .hero { text-align: center; padding: 72px 0 48px; }
+    .hero h1 {
+      font-size: 3rem; font-weight: 800; line-height: 1.18;
+      letter-spacing: -1px; margin-bottom: 20px;
+    }
+    .hero p {
+      font-size: 1.15rem; color: var(--muted); max-width: 780px; margin: 0 auto 32px;
+    }
+    .cta-row { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      padding: 14px 28px; border-radius: 10px; font-weight: 700; font-size: 1rem;
+      text-decoration: none; transition: all 0.18s ease;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #fff; box-shadow: 0 8px 28px rgba(56, 189, 248, 0.25);
+    }
+    .btn-secondary {
+      background: var(--card); color: var(--text); border: 1px solid var(--border);
+    }
+    .terminal {
+      background: #05070b; border: 1px solid var(--border); border-radius: 14px;
+      padding: 22px; font-family: "SF Mono", Menlo, monospace; font-size: 0.84rem;
+      color: #cbd5e1; margin: 40px auto; max-width: 900px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6); overflow-x: auto;
+    }
+    .terminal .green { color: var(--success); font-weight: 700; }
+    .terminal .cyan { color: var(--accent); }
+    .terminal .purple { color: #c084fc; }
+    .grid-3 {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 22px; margin: 48px 0;
+    }
+    .card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 14px; padding: 28px;
+    }
+    .card h3 { font-size: 1.2rem; margin-bottom: 10px; color: #fff; }
+    .card p { color: var(--muted); font-size: 0.95rem; }
+    .stat-num {
+      font-size: 2.2rem; font-weight: 800; color: var(--accent);
+      font-family: "SF Mono", monospace; margin-bottom: 6px;
+    }
+    .pricing-card {
+      display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .pricing-card.featured {
+      border: 2px solid var(--accent);
+      box-shadow: 0 0 35px rgba(56, 189, 248, 0.15);
+    }
+    .price { font-size: 2.5rem; font-weight: 800; margin: 16px 0; }
+    .price span { font-size: 0.95rem; color: var(--muted); font-weight: 400; }
+    ul.features { list-style: none; margin: 16px 0 28px; }
+    ul.features li { margin-bottom: 10px; font-size: 0.93rem; color: #cbd5e1; }
+    ul.features li::before { content: "✓ "; color: var(--success); font-weight: 800; }
+    [data-lang="ko"] { display: none; }
+    body.lang-ko [data-lang="en"] { display: none; }
+    body.lang-ko [data-lang="ko"] { display: block; }
+    body.lang-ko span[data-lang="ko"], body.lang-ko a[data-lang="ko"] { display: inline-block; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">relay // scLock</div>
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <span style="font-size: 0.88rem; color: var(--muted);">by <strong>relay</strong> · macOS arm64 SDK v1.0.0</span>
+        <button class="lang-btn" onclick="document.body.classList.toggle('lang-ko')">EN / 한국어</button>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="badge">Developed by relay · Zero-Key Apple Secure Enclave + 256-Slot Polymorphic Chaos VM</div>
+
+      <h1 data-lang="en">Lock Your Native Code to<br/>Supercluster Math &amp; Apple Silicon Physics</h1>
+      <h1 data-lang="ko">초은하단(Supercluster) 다형성 VM과<br/>Apple 물리 실리콘에 코드를 잠그다</h1>
+
+      <p data-lang="en">
+        Defeat static decompilers (Ghidra, IDA Pro), symbolic execution solvers, and autonomous AI reverse-engineering agents.<br/>
+        Master decryption keys never exist in your binary—derived exclusively inside the physical <strong>Apple Secure Enclave (SEP)</strong> chip.
+      </p>
+      <p data-lang="ko">
+        정적 디컴파일러(Ghidra/IDA)부터 최신 자율형 AI 리버스 엔지니어링 에이전트까지 완벽히 무력화합니다.<br/>
+        마스터 복호화 키는 바이너리에 존재하지 않으며, 오직 Mac의 물리적 <strong>Secure Enclave (SEP)</strong> 칩에서만 유도됩니다.
+      </p>
+
+      <div class="cta-row">
+        <a href="#pricing" class="btn btn-primary" data-lang="en">Get scLock SDK ($79~)</a>
+        <a href="#pricing" class="btn btn-primary" data-lang="ko">scLock SDK 다운로드 ($79~)</a>
+        <a href="#benchmarks" class="btn btn-secondary" data-lang="en">View Benchmarks &amp; Audit</a>
+        <a href="#benchmarks" class="btn btn-secondary" data-lang="ko">성능 및 방어 벤치마크</a>
+      </div>
+    </section>
+
+    <div class="terminal">
+<pre><span class="cyan">$ sclock verify /Applications/PhotoCraft.app</span>
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  scLock Security &amp; Zero-Leak Stealth Auditor v1.0.0-commercial (by relay)
+  Target: /Applications/PhotoCraft.app/Contents/MacOS/PhotoCraft (59.02 MB)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  [1/5] Symbol Table Stealth Check (nm)          : <span class="green">PASS [0 internal symbols exposed]</span>
+  [2/5] Plaintext String Leak Check (strings)    : <span class="green">PASS [0 hint strings exposed]</span>
+  [3/5] Apple Secure Enclave Silicon Key Binding : <span class="green">PASS [P-256 SEP Key Blob (rk1/dacl) verified]</span>
+  [4/5] Kernel Anti-Debug (P_TRACED) &amp; CryptoKit : <span class="green">PASS [Branchless ECDH + sysctl entangled]</span>
+  [5/5] Binary Shannon Entropy                   : <span class="purple">7.0079 bits/byte (High-Entropy Polymorphic VM)</span>
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</pre>
+    </div>
+
+    <section id="benchmarks" class="grid-3">
+      <div class="card">
+        <div class="stat-num">8.15 µs</div>
+        <h3 data-lang="en">Ultra-Fast Hot-Path Latency</h3>
+        <h3 data-lang="ko">초저지연 Hot-Path 실행</h3>
+        <p data-lang="en">Over 120,000 protected calls/second (&lt; 0.2% of a 240Hz frame budget). Zero frame drops for real-time GUI, DSP, and rendering engines.</p>
+        <p data-lang="ko">초당 120,000회 이상 호출 가능. 240Hz 고주사율 GUI 및 실시간 그래픽 엔진에서도 프레임 저하 0%를 보장합니다.</p>
+      </div>
+      <div class="card">
+        <div class="stat-num">0 Keys</div>
+        <h3 data-lang="en">Zero-Key Binary Architecture</h3>
+        <h3 data-lang="ko">Zero-Key Binary 아키텍처</h3>
+        <p data-lang="en">Zero decryption keys are stored in the binary. Without the physical Apple Secure Enclave silicon UID, the sponge bytecode cannot be unsealed.</p>
+        <p data-lang="ko">바이너리 내부에는 바이트코드 복호화 키가 단 1비트도 저장되지 않습니다. 물리적 Apple Secure Enclave 칩이 없으면 복호화 자체가 불가능합니다.</p>
+      </div>
+      <div class="card">
+        <div class="stat-num">330s+ T/O</div>
+        <h3 data-lang="en">Defeats Ghidra &amp; AI Agents</h3>
+        <h3 data-lang="ko">Ghidra &amp; AI 에이전트 무력화</h3>
+        <p data-lang="en">256 Non-Linear MBA (&Zopf;<sub>2<sup>64</sup></sub>) handlers and 2-adic opaque predicates time out Ghidra Headless decompilers and block autonomous AI reversers.</p>
+        <p data-lang="ko">256개의 비선형 MBA 핸들러와 2-adic 불투명 술어가 Ghidra 디컴파일러를 타임아웃시키고 자율형 AI 분석기를 차단합니다.</p>
+      </div>
+    </section>
+
+    <section id="pricing" style="margin-top: 64px;">
+      <h2 style="text-align: center; font-size: 2rem; margin-bottom: 12px;" data-lang="en">Perpetual Commercial License · 0% Royalties</h2>
+      <h2 style="text-align: center; font-size: 2rem; margin-bottom: 12px;" data-lang="ko">영구 상용 라이선스 · 배포 로열티 0%</h2>
+      <p style="text-align: center; color: var(--muted); margin-bottom: 36px;" data-lang="en">
+        Ship unlimited protected binaries, macOS apps, and Rust crates worldwide with zero recurring royalties.
+      </p>
+      <p style="text-align: center; color: var(--muted); margin-bottom: 36px;" data-lang="ko">
+        scLock으로 보호한 상용 앱과 라이브러리는 추가 로열티(0원) 없이 전 세계에 무제한 판매·배포할 수 있습니다.
+      </p>
+
+      <div class="grid-3">
+        <div class="card pricing-card">
+          <div>
+            <h3>Indie Edition</h3>
+            <div class="price">$79 <span>/ one-time (perpetual)</span></div>
+            <ul class="features" data-lang="en">
+              <li>For solo developers &amp; indie studios (&lt;$100k/yr)</li>
+              <li><code>sclock</code> macOS arm64 Commercial CLI</li>
+              <li>Protect C / C++ / Wasm standalone binaries</li>
+              <li><code>--emit-crate</code> Rust workspace crate generator</li>
+              <li>100% Royalty-Free commercial output distribution</li>
+            </ul>
+            <ul class="features" data-lang="ko">
+              <li>1인 인디 개발자 및 소규모 팀 (&lt;$100k/년)</li>
+              <li><code>sclock</code> macOS arm64 상용 CLI 바이너리</li>
+              <li>C / C++ / Wasm 독립 실행 파일 보호</li>
+              <li><code>--emit-crate</code> Rust 크레이트 생성기</li>
+              <li>생성된 결과물 상용 배포 로열티 0%</li>
+            </ul>
+          </div>
+          <a href="https://planners3.gumroad.com/l/sclock" class="btn btn-secondary" style="text-align:center;">Buy Indie Edition</a>
+        </div>
+
+        <div class="card pricing-card featured">
+          <div>
+            <div style="color: var(--accent); font-size: 0.8rem; font-weight: 700; margin-bottom: 4px;">MOST POPULAR</div>
+            <h3>Studio Edition</h3>
+            <div class="price">$249 <span>/ one-time (perpetual)</span></div>
+            <ul class="features" data-lang="en">
+              <li>For startups &amp; commercial software studios</li>
+              <li>Unlimited macOS build machines &amp; CI/CD runners</li>
+              <li><code>sclock protect-app</code> 1-click <code>.app</code> stealth sealer</li>
+              <li><code>sclock verify</code> 5-point security audit report</li>
+              <li>Includes 1 year of major polymorphic ISA updates</li>
+            </ul>
+            <ul class="features" data-lang="ko">
+              <li>스타트업 및 상용 소프트웨어 스튜디오 무제한</li>
+              <li>CI/CD 빌드 서버(GitHub Actions 등) 무제한 탑재</li>
+              <li><code>sclock protect-app</code> 앱 번들 자동 스텔스 서명</li>
+              <li><code>sclock verify</code> 5단계 보안 감사 리포트</li>
+              <li>1년 메이저 다형성 ISA 엔진 업데이트 포함</li>
+            </ul>
+          </div>
+          <a href="https://planners3.gumroad.com/l/sclock" class="btn btn-primary" style="text-align:center;">Buy Studio Edition</a>
+        </div>
+
+        <div class="card pricing-card">
+          <div>
+            <h3>Enterprise Custom</h3>
+            <div class="price">$990+ <span>/ custom deployment</span></div>
+            <ul class="features" data-lang="en">
+              <li>Dedicated custom MBA polynomial generator seeds</li>
+              <li>Custom hardware attestation &amp; license server hooks</li>
+              <li>Priority C++ / Rust / Swift architecture integration</li>
+              <li>Formal security &amp; stealth audit certification</li>
+            </ul>
+            <ul class="features" data-lang="ko">
+              <li>기업 전용 커스텀 MBA 대수 생성기 시드 고정</li>
+              <li>전용 하드웨어 엔클레이브 / 라이선스 서버 연동</li>
+              <li>기존 C++/Rust/Swift 대규모 앱 통합 기술 지원</li>
+              <li>맞춤형 보안 감사 성적서 발급</li>
+            </ul>
+          </div>
+          <a href="https://github.com/planners1490/sclock/issues" class="btn btn-secondary" style="text-align:center;">Contact relay</a>
+        </div>
+      </div>
+    </section>
+
+    <footer style="margin-top: 72px; padding-top: 28px; border-top: 1px solid var(--border); text-align: center; color: var(--muted); font-size: 0.88rem;">
+      © 2026 <strong>relay</strong>. All rights reserved. · Built with scLock Supercluster Defense Architecture.
+    </footer>
+  </div>
+</body>
+</html>
