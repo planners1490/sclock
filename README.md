@@ -28,12 +28,12 @@ Standard macOS Mach-O (`arm64`) binaries compiled from C, C++, Rust, Swift, or O
 **`scLock` (Supercluster Lock)** combines **compile-time 256-slot polymorphic virtualization**, **per-handler MBA key shattering**, and **dual-tier Apple Silicon Secure Enclave (`SEP`) binding**:
 
 1. **Per-Build 256-Slot Polymorphic ISA + 84 Chaff Traps**: Every compilation (`sclock compile`) synthesizes a brand-new 256-entry instruction set (`172` active micro-ops + `84` state-corrupting chaff handlers) from a 64-bit polymorphic seed. No two builds ever share the same bytecode encoding or handler table.
-2. **Per-Handler Immediate Encryption & One-Way Anchor Shards**: Even if an analyst extracts the outer sponge keys `(k0, k1)`, **bytecode packets cannot be decrypted from static tables alone**. Raw handler salts (`op_secret_salt`) are completely omitted from static data sections (replaced by one-way Davies-Meyer `ANCHOR_SHARDS`) and embedded exclusively as non-linear MBA polynomials inside each of the 256 compiled ARM64 handler functions (`__sc_lut_op_000..255`). Every packet's operands (`arg1`, `arg2`, and sponge transition delta `arg3` / $\Delta_{u \to v}$) are encrypted by its target handler's MBA-locked salt.
+2. **Per-Handler Runtime-Entangled (`black_box` + `vm.anchor`) MBA Salt Shattering**: Even when an analyst computes the outer sponge keys `(k0, k1)` in Portable mode, **bytecode packets cannot be decrypted from static tables or immediate constants**. Raw handler salts (`op_secret_salt`) are omitted from static data sections (replaced by one-way Davies-Meyer `ANCHOR_SHARDS`) and pre-masked against the code-integrity anchor. Inside each of the 256 compiled ARM64 handlers (`__sc_lut_op_000..255`), `h_salt` and operand masks (`hm1, hm2, hm3`) are reconstructed at runtime by combining `std::hint::black_box`-guarded affine parameters with the live `vm.anchor` (`[x0, #0xa0]`) through non-linear MBA polynomials—defeating `LLVM` (`-C opt-level=3`) constant folding and `InstCombine` simplification.
 3. **Non-Linear Mixed Boolean-Arithmetic ($\mathbb{Z}_{2^{64}}$) & 2-adic Bijections**: Arithmetic, multiplication, constants, and control-flow transitions are lifted into degree-2/3 non-linear MBA identities over $\mathbb{Z}_{2^{64}}$ coupled with 2-adic number-theoretic opaque predicates ($7x^2 - 1 \neq y^2 \pmod{2^{64}}$).
-4. **Dual-Tier Apple Secure Enclave (`SEP`) Hardware Binding**:
-   - **Portable SEP-Attested Mode (Default, `SCP1`)**: Built for redistributable end-user macOS apps and the public `CrackMe`. Runs on **any Apple Silicon Mac (`M1 / M2 / M3 / M4`)** while sealing the P-256 scalar behind a **1,024-round SHA-256 Code-Anchor KDF** and a **Live SEP Commutative P-256 Double-ECDH Hardware Proof** ($d_{\text{SEP}} \cdot Q_P \stackrel{?}{=} d_P \cdot Q_{\text{SEP}}$ executed inside the physical Secure Enclave coprocessor).
-   - **Hardware UID Node-Locked Mode (`--sep-lock` / `--host-sep-lock`)**: Seals the P-256 private key directly inside the target Mac's physical Secure Enclave UID (`kSecAttrTokenIDSecureEnclave` hardware-wrapped `rk1`/`dacl` blob). **Zero unsealable key material exists anywhere in the Mach-O binary**—ideal for node-locked enterprise licenses, build servers, and local hardware sealing.
-5. **Branchless Anti-Debug State Entanglement & Zero-Leak Camouflage**: Instead of patchable `if (is_debugged) exit()` branches, `scLock` mixes the kernel `sysctl` `P_TRACED` bit and ARM64 prologue `BRK` (`0xD4200000`) scans directly into the 256-bit sponge state accumulator, with automatic symbol/string scrubbing (`sclock protect-app`).
+4. **Dual-Tier Apple Secure Enclave (`SEP`) Architecture**:
+   - **Portable Multi-Mac Mode (Default, `SCP1`)**: Built for universal end-user macOS distribution and the public `CrackMe` so the binary runs offline on **any Apple Silicon Mac (`M1 / M2 / M3 / M4`)**. Derives the outer sponge keys `(k0, k1)` via a **1,024-round SHA-256 Code-Anchor White-Box KDF** paired with a **Live SEP Commutative P-256 Double-ECDH Anti-Emulation / Anti-Hooking Gate** ($d_{\text{SEP}} \cdot Q_P \stackrel{?}{=} d_P \cdot Q_{\text{SEP}}$ executed on the Secure Enclave to poison execution under non-SEP emulators or API hooks). Because offline execution across all Macs requires deterministic key derivation, static extraction defense in `SCP1` is provided by **per-handler runtime-entangled (`vm.anchor` + `black_box`) MBA salt shattering** and **state-dependent sponge chaining** across all 256 handlers.
+   - **Hardware UID Node-Locked Mode (`--sep-lock` / `--host-sep-lock`)**: Seals the P-256 private key directly inside the target Mac's physical Secure Enclave UID (`kSecAttrTokenIDSecureEnclave` hardware-wrapped `rk1`/`dacl` blob). **Zero unsealable key material exists anywhere in the Mach-O binary**—offline key derivation is physically impossible without the target Mac's Secure Enclave silicon.
+5. **Branchless Anti-Debug State Entanglement & Zero-Leak Camouflage**: Instead of patchable `if (is_debugged) exit()` branches, `scLock` mixes the kernel `sysctl` `P_TRACED` bit and ARM64 prologue `BRK` (`0xD4200000`) scans directly into the 256-bit sponge state accumulator, with automatic symbol and toolchain path scrubbing (`sclock protect-app`).
 
 ---
 
@@ -85,9 +85,9 @@ Tested on Apple Silicon (macOS `arm64`, Release profile):
 | :--- | :--- | :--- |
 | **Ghidra 11.x Decompiler (`DecompileCallback`)** | `0.4 sec` (Full C source recovered) | **`> 330 sec` TIMEOUT (`Decompiler process killed`)** |
 | **IDA Pro / Binary Ninja CFG Recovery** | Clean control-flow graph | **256-way indirect dispatch wall + 84 Chaff traps** |
-| **Key & Salt Architecture** | Constants visible in `__TEXT,__const` | **Per-handler MBA salt shattering + SEP Double-ECDH (`SCP1`) or UID Lock (`--sep-lock`)** |
+| **Key & Salt Architecture** | Constants visible in `__TEXT,__const` | **Per-handler `black_box` MBA salt shattering + Portable `SCP1` / Node-Locked `--sep-lock`** |
 | **Dynamic Debugging (`lldb` / `frida`)** | Trivial breakpoint & register modification | **Silent state corruption via branchless `P_TRACED` entanglement** |
-| **Symbol & Crate Path Audit (`nm` / `strings`)** | Function names & LLVM/Rust paths exposed | **`0` leaks (Auto-scrubbed & stripped Mach-O)** |
+| **Obfuscator Symbol & Path Audit (`nm` / `strings`)** | Function names & `/rustc/` / `.llvm.` paths exposed | **`0` obfuscator/VM symbol or `/rustc/` path leaks (Auto-scrubbed Mach-O)** |
 
 ### 2. Runtime Performance Overhead
 
@@ -170,11 +170,11 @@ See [`examples/01_quickstart_c`](examples/01_quickstart_c) (`protect_me.c`, `Mak
 **`scLock`**(개발팀 **relay**)은 Apple Silicon(`macOS arm64`) 네이티브 소프트웨어 개발사를 위한 **하드웨어 결합형 256-슬롯 다형성 가상머신(Polymorphic VM) 및 비선형 대수(MBA) 바이너리 보호 컴파일러**입니다.
 
 1. **빌드마다 완전히 새로 합성되는 256-슬롯 다형성 ISA**: 컴파일할 때마다 64비트 다형성 시드를 기반으로 `172`개의 실제 마이크로 핸들러와 `84`개의 상태 교란용 더미(Chaff) 핸들러가 새로 합성됩니다.
-2. **핸들러별 즉시값 암호화 및 비가역(One-Way) 솔트 은폐**: 정적 데이터 섹션에서 원본 핸들러 솔트(`op_secret_salt`) 테이블을 완전히 제거하고(단방향 Davies-Meyer 샤드만 보관), 각 핸들러의 솔트를 256개 네이티브 ARM64 함수 내부의 비선형 MBA 수식으로만 파편화하여 모든 피연산자(`arg1`, `arg2`, 스폰지 상태 전이 델타 `arg3`)를 개별 잠금합니다.
-3. **이중(Dual-Tier) Apple Secure Enclave(`SEP`) 하드웨어 결합 모드**:
-   - **포터블 배포 모드 (기본값, `SCP1`)**: 최종 사용자 배포용 앱 및 공개 CrackMe에 사용되며 모든 Apple Silicon Mac에서 동작합니다. 1,024라운드 코드 무결성 KDF와 물리적 SEP 실리콘 내부의 **가환 타원곡선(Commutative P-256 Double-ECDH) 실시간 등가성 증명**($d_{\text{SEP}} \cdot Q_P \stackrel{?}{=} d_P \cdot Q_{\text{SEP}}$)을 결합합니다.
-   - **단일 기기 SEP UID 완전 귀속 모드 (`--sep-lock` / `--host-sep-lock`)**: 키를 타겟 Mac의 물리적 Secure Enclave 실리콘 UID(`dataRepresentation`) 내부에 직접 봉인하여 **바이너리 내 복호화 가능한 키 재료를 0바이트로 제거**합니다.
-4. **무분기(Branchless) 안티 디버깅 및 스텔스 패치**: `if (debugged)` 분기문 대신 커널 `sysctl`(`P_TRACED`) 상태 비트와 명령어 프롤로그(`BRK`) 스캔 값을 256비트 스폰지 상태에 직접 결합하며, `.llvm.` 흔적 및 심볼 테이블을 자동 소거합니다.
+2. **핸들러별 런타임(`vm.anchor` + `black_box`) 결합 MBA 솔트 파편화**: 정적 데이터 섹션에서 원본 핸들러 솔트(`op_secret_salt`) 테이블을 완전히 제거하고(단방향 Davies-Meyer 샤드만 보관), 각 핸들러 프롤로그에서 컴파일러 상수 접힘(`LLVM Constant Folding / InstCombine`)을 차단하는 `black_box` 장벽과 실시간 `vm.anchor` 값을 결합한 비선형 MBA 수식으로만 솔트와 피연산자 마스크(`hm1, hm2, hm3`)를 복원합니다.
+3. **이중(Dual-Tier) Apple Secure Enclave(`SEP`) 아키텍처**:
+   - **포터블 다중 기기 배포 모드 (기본값, `SCP1`)**: 최종 사용자 배포용 앱 및 공개 CrackMe에 사용되며 모든 Apple Silicon Mac에서 오프라인으로 동작합니다. 1,024라운드 코드 무결성 화이트박스 KDF와 물리적 SEP 실리콘의 **가환 타원곡선(Commutative P-256 Double-ECDH) 안티 에뮬레이션/후킹 검증 게이트**를 결합하며, 정적 오프라인 분석에 대한 방어는 256개 핸들러 내부의 비선형 MBA 솔트 파편화 및 64비트 스폰지 체이닝이 담당합니다.
+   - **단일 기기 SEP UID 완전 귀속 모드 (`--sep-lock` / `--host-sep-lock`)**: 키를 타겟 Mac의 물리적 Secure Enclave 실리콘 UID(`dataRepresentation`) 내부에 직접 봉인하여 **바이너리 내 오프라인 복호화 가능한 키 재료를 0바이트로 원천 제거**합니다.
+4. **무분기(Branchless) 안티 디버깅 및 스텔스 패치**: `if (debugged)` 분기문 대신 커널 `sysctl`(`P_TRACED`) 상태 비트와 명령어 프롤로그(`BRK`) 스캔 값을 256비트 스폰지 상태에 직접 결합하며, `/rustc/`·`.llvm.` 경로 흔적 및 심볼 테이블을 자동 소거합니다.
 
 ### 무료 크랙미(CrackMe) 챌린지 및 상용 SDK 구매
 - **무료 평가판 바이너리(CrackMe)**: 이 저장소의 [`crackme/challenge_protected`](crackme/challenge_protected) 바이너리를 직접 다운로드하여(`xattr -cr ./challenge_protected && chmod +x ./challenge_protected`) Ghidra, IDA Pro, Binary Ninja, LLDB에서 방어력을 직접 검증해 보실 수 있습니다.

@@ -117,56 +117,56 @@
     </header>
 
     <section class="hero">
-      <div class="badge">Developed by relay · Zero-Key Apple Secure Enclave + 256-Slot Polymorphic Chaos VM</div>
+      <div class="badge">Developed by relay · Dual-Tier Apple Secure Enclave + 256-Slot Non-Linear MBA VM</div>
 
       <h1 data-lang="en">Lock Your Native Code to<br/>Supercluster Math &amp; Apple Silicon Physics</h1>
       <h1 data-lang="ko">초은하단(Supercluster) 다형성 VM과<br/>Apple 물리 실리콘에 코드를 잠그다</h1>
 
       <p data-lang="en">
         Defeat static decompilers (Ghidra, IDA Pro), symbolic execution solvers, and autonomous AI reverse-engineering agents.<br/>
-        Master decryption keys never exist in your binary—derived exclusively inside the physical <strong>Apple Secure Enclave (SEP)</strong> chip.
+        Combines <strong>per-handler runtime-entangled (<code>black_box</code>) MBA salt shattering</strong> with <strong>Portable SEP-Attested (<code>SCP1</code>)</strong> distribution or <strong>Node-Locked Physical SEP UID (<code>--sep-lock</code>)</strong> hardware sealing.
       </p>
       <p data-lang="ko">
         정적 디컴파일러(Ghidra/IDA)부터 최신 자율형 AI 리버스 엔지니어링 에이전트까지 완벽히 무력화합니다.<br/>
-        마스터 복호화 키는 바이너리에 존재하지 않으며, 오직 Mac의 물리적 <strong>Secure Enclave (SEP)</strong> 칩에서만 유도됩니다.
+        <strong>핸들러별 런타임 결합(<code>black_box</code>) 비선형 MBA 솔트 파편화</strong>와 <strong>포터블 다중 Mac 배포 모드(<code>SCP1</code>)</strong> 및 <strong>단일 기기 물리적 SEP UID 완전 봉인 모드(<code>--sep-lock</code>)</strong>를 모두 지원합니다.
       </p>
 
       <div class="cta-row">
         <a href="#pricing" class="btn btn-primary" data-lang="en">Get scLock SDK ($79~)</a>
         <a href="#pricing" class="btn btn-primary" data-lang="ko">scLock SDK 다운로드 ($79~)</a>
-        <a href="#benchmarks" class="btn btn-secondary" data-lang="en">View Benchmarks &amp; Audit</a>
-        <a href="#benchmarks" class="btn btn-secondary" data-lang="ko">성능 및 방어 벤치마크</a>
+        <a href="https://github.com/planners1490/sclock#public-reverse-engineering-challenge-crackme" class="btn btn-secondary" data-lang="en">Try Public CrackMe</a>
+        <a href="https://github.com/planners1490/sclock#public-reverse-engineering-challenge-crackme" class="btn btn-secondary" data-lang="ko">공개 CrackMe 챌린지</a>
       </div>
     </section>
 
     <div class="terminal">
-<pre><span class="cyan">$ sclock verify /Applications/PhotoCraft.app</span>
+<pre><span class="cyan">$ sclock verify ./challenge_protected</span>
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   scLock Security &amp; Zero-Leak Stealth Auditor v1.0.0-commercial (by relay)
-  Target: /Applications/PhotoCraft.app/Contents/MacOS/PhotoCraft (59.02 MB)
+  Target: ./challenge_protected (Mach-O 64-bit executable arm64)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   [1/5] Symbol Table Stealth Check (nm)          : <span class="green">PASS [0 internal symbols exposed]</span>
-  [2/5] Plaintext String Leak Check (strings)    : <span class="green">PASS [0 hint strings exposed]</span>
-  [3/5] Apple Secure Enclave Silicon Key Binding : <span class="green">PASS [P-256 SEP Key Blob (rk1/dacl) verified]</span>
+  [2/5] Plaintext String Leak Check (strings)    : <span class="green">PASS [0 obfuscator/VM or /rustc/ leaks]</span>
+  [3/5] Apple Secure Enclave Silicon Key Binding : <span class="green">PASS [Portable SCP1 / Physical SEP UID verified]</span>
   [4/5] Kernel Anti-Debug (P_TRACED) &amp; CryptoKit : <span class="green">PASS [Branchless ECDH + sysctl entangled]</span>
-  [5/5] Binary Shannon Entropy                   : <span class="purple">7.0079 bits/byte (High-Entropy Polymorphic VM)</span>
+  [5/5] Binary Shannon Entropy                   : <span class="purple">6.5414 bits/byte (256-Slot Non-Linear MBA VM)</span>
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</pre>
     </div>
 
     <section id="benchmarks" class="grid-3">
       <div class="card">
-        <div class="stat-num">8.15 µs</div>
+        <div class="stat-num">~8–12 µs</div>
         <h3 data-lang="en">Ultra-Fast Hot-Path Latency</h3>
         <h3 data-lang="ko">초저지연 Hot-Path 실행</h3>
-        <p data-lang="en">Over 120,000 protected calls/second (&lt; 0.2% of a 240Hz frame budget). Zero frame drops for real-time GUI, DSP, and rendering engines.</p>
-        <p data-lang="ko">초당 120,000회 이상 호출 가능. 240Hz 고주사율 GUI 및 실시간 그래픽 엔진에서도 프레임 저하 0%를 보장합니다.</p>
+        <p data-lang="en">85,000–120,000 protected calls/second (&lt; 0.15% of a 120Hz frame budget). Zero frame drops for real-time GUI, DSP, and rendering engines.</p>
+        <p data-lang="ko">초당 85,000~120,000회 호출 가능. 120Hz 고주사율 GUI, 오디오 플러그인(AU/VST3) 및 실시간 그래픽 엔진에서 프레임 저하 0%를 보장합니다.</p>
       </div>
       <div class="card">
-        <div class="stat-num">0 Keys</div>
-        <h3 data-lang="en">Zero-Key Binary Architecture</h3>
-        <h3 data-lang="ko">Zero-Key Binary 아키텍처</h3>
-        <p data-lang="en">Zero decryption keys are stored in the binary. Without the physical Apple Secure Enclave silicon UID, the sponge bytecode cannot be unsealed.</p>
-        <p data-lang="ko">바이너리 내부에는 바이트코드 복호화 키가 단 1비트도 저장되지 않습니다. 물리적 Apple Secure Enclave 칩이 없으면 복호화 자체가 불가능합니다.</p>
+        <div class="stat-num">256 Salts</div>
+        <h3 data-lang="en">Dual-Tier SEP &amp; MBA Shattering</h3>
+        <h3 data-lang="ko">이중 SEP 결합 &amp; MBA 솔트 파편화</h3>
+        <p data-lang="en">Every handler unmasks its salt at runtime via <code>black_box</code> + <code>vm.anchor</code> MBA polynomials. Choose Portable All-Mac (<code>SCP1</code>) or Node-Locked Physical SEP UID (<code>--sep-lock</code>, 0 unsealable keys in binary).</p>
+        <p data-lang="ko">256개 핸들러가 런타임 <code>black_box</code> + <code>vm.anchor</code> 비선형 MBA 수식으로 솔트를 복원하며, 모든 Mac 호환 포터블 모드(<code>SCP1</code>)와 바이너리 내 키 0바이트 물리 귀속 모드(<code>--sep-lock</code>)를 모두 지원합니다.</p>
       </div>
       <div class="card">
         <div class="stat-num">330s+ T/O</div>
