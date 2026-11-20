@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>scLock by relay — Supercluster Polymorphic VM & Apple Secure Enclave Lock</title>
+  <title>scLock by relay — Open-Source Supercluster Polymorphic VM & Apple Secure Enclave Compiler (MIT)</title>
   <style>
     :root {
       --bg: #07090e;
@@ -41,8 +41,8 @@
     .badge {
       display: inline-block; padding: 6px 14px; border-radius: 999px;
       font-size: 0.8rem; font-weight: 600;
-      background: rgba(56, 189, 248, 0.12); color: var(--accent);
-      border: 1px solid rgba(56, 189, 248, 0.3);
+      background: rgba(34, 197, 94, 0.12); color: var(--success);
+      border: 1px solid rgba(34, 197, 94, 0.35);
       margin-bottom: 20px;
     }
     .hero { text-align: center; padding: 72px 0 48px; }
@@ -95,8 +95,6 @@
       border: 2px solid var(--accent);
       box-shadow: 0 0 35px rgba(56, 189, 248, 0.15);
     }
-    .price { font-size: 2.5rem; font-weight: 800; margin: 16px 0; }
-    .price span { font-size: 0.95rem; color: var(--muted); font-weight: 400; }
     ul.features { list-style: none; margin: 16px 0 28px; }
     ul.features li { margin-bottom: 10px; font-size: 0.93rem; color: #cbd5e1; }
     ul.features li::before { content: "✓ "; color: var(--success); font-weight: 800; }
@@ -111,39 +109,40 @@
     <header>
       <div class="logo">relay // scLock</div>
       <div style="display: flex; align-items: center; gap: 14px;">
-        <span style="font-size: 0.88rem; color: var(--muted);">by <strong>relay</strong> · macOS arm64 SDK v1.0.0</span>
+        <span style="font-size: 0.88rem; color: var(--muted);">by <strong>relay</strong> · Open-Source MIT · macOS arm64 v1.0.0</span>
         <button class="lang-btn" onclick="document.body.classList.toggle('lang-ko')">EN / 한국어</button>
       </div>
     </header>
 
     <section class="hero">
-      <div class="badge">Developed by relay · Dual-Tier Apple Secure Enclave + 256-Slot Non-Linear MBA VM</div>
+      <div class="badge">100% Open Source (MIT License) · Dual-Tier Apple Secure Enclave + 256-Slot Non-Linear MBA VM</div>
 
       <h1 data-lang="en">Lock Your Native Code to<br/>Supercluster Math &amp; Apple Silicon Physics</h1>
       <h1 data-lang="ko">초은하단(Supercluster) 다형성 VM과<br/>Apple 물리 실리콘에 코드를 잠그다</h1>
 
       <p data-lang="en">
-        Defeat static decompilers (Ghidra, IDA Pro), symbolic execution solvers, and autonomous AI reverse-engineering agents.<br/>
-        Combines <strong>per-handler runtime-entangled (<code>black_box</code>) MBA salt shattering</strong> with <strong>Portable SEP-Attested (<code>SCP1</code>)</strong> distribution or <strong>Node-Locked Physical SEP UID (<code>--sep-lock</code>)</strong> hardware sealing.
+        Open-source virtualization and anti-reversing compiler in pure Rust for macOS (<code>arm64</code>).<br/>
+        Combines <strong>zero-spill register-barrier (<code>__sc_rb</code>) MBA salt shattering</strong> and <strong>(<code>vm.sigma, vm.pc</code>) trajectory masks</strong> with <strong>Portable SEP-Attested (<code>SCP1</code>)</strong> or <strong>Node-Locked Physical SEP UID (<code>--sep-lock</code>)</strong> hardware sealing.
       </p>
       <p data-lang="ko">
-        정적 디컴파일러(Ghidra/IDA)부터 최신 자율형 AI 리버스 엔지니어링 에이전트까지 완벽히 무력화합니다.<br/>
-        <strong>핸들러별 런타임 결합(<code>black_box</code>) 비선형 MBA 솔트 파편화</strong>와 <strong>포터블 다중 Mac 배포 모드(<code>SCP1</code>)</strong> 및 <strong>단일 기기 물리적 SEP UID 완전 봉인 모드(<code>--sep-lock</code>)</strong>를 모두 지원합니다.
+        순수 Rust로 작성된 macOS(<code>arm64</code>)용 100% 오픈소스(MIT) 다형성 가상화 및 하드웨어 결합 컴파일러입니다.<br/>
+        <strong>레지스터 장벽(<code>__sc_rb</code>) 비선형 MBA 솔트 파편화</strong>, <strong>실행 궤적(<code>vm.sigma, vm.pc</code>) 피연산자 마스킹</strong>, <strong>포터블 다중 Mac 배포 모드(<code>SCP1</code>)</strong> 및 <strong>단일 기기 물리적 SEP UID 완전 봉인 모드(<code>--sep-lock</code>)</strong>를 모두 제공합니다.
       </p>
 
       <div class="cta-row">
-        <a href="#pricing" class="btn btn-primary" data-lang="en">Get scLock SDK ($79~)</a>
-        <a href="#pricing" class="btn btn-primary" data-lang="ko">scLock SDK 다운로드 ($79~)</a>
-        <a href="https://github.com/planners1490/sclock#public-reverse-engineering-challenge-crackme" class="btn btn-secondary" data-lang="en">Try Public CrackMe</a>
-        <a href="https://github.com/planners1490/sclock#public-reverse-engineering-challenge-crackme" class="btn btn-secondary" data-lang="ko">공개 CrackMe 챌린지</a>
+        <a href="https://github.com/planners1490/sclock" class="btn btn-primary" data-lang="en">View Source on GitHub (MIT)</a>
+        <a href="https://github.com/planners1490/sclock" class="btn btn-primary" data-lang="ko">GitHub 소스 코드 보기 (MIT)</a>
+        <a href="https://github.com/planners1490/sclock/releases/latest" class="btn btn-secondary" data-lang="en">Download Prebuilt SDK &amp; CrackMe</a>
+        <a href="https://github.com/planners1490/sclock/releases/latest" class="btn btn-secondary" data-lang="ko">빌드된 바이너리 &amp; CrackMe 다운로드</a>
       </div>
     </section>
 
     <div class="terminal">
-<pre><span class="cyan">$ sclock verify ./challenge_protected</span>
+<pre><span class="cyan">$ git clone https://github.com/planners1490/sclock.git &amp;&amp; cd sclock &amp;&amp; cargo build --release</span>
+<span class="cyan">$ ./target/release/sclock verify ./crackme/challenge_protected</span>
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  scLock Security &amp; Zero-Leak Stealth Auditor v1.0.0-commercial (by relay)
-  Target: ./challenge_protected (Mach-O 64-bit executable arm64)
+  scLock Security &amp; Zero-Leak Stealth Auditor v1.0.0 (by relay · MIT License)
+  Target: ./crackme/challenge_protected (Mach-O 64-bit executable arm64)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   [1/5] Symbol Table Stealth Check (nm)          : <span class="green">PASS [0 internal symbols exposed]</span>
   [2/5] Plaintext String Leak Check (strings)    : <span class="green">PASS [0 obfuscator/VM or /rustc/ leaks]</span>
@@ -155,18 +154,18 @@
 
     <section id="benchmarks" class="grid-3">
       <div class="card">
-        <div class="stat-num">~8–12 µs</div>
-        <h3 data-lang="en">Ultra-Fast Hot-Path Latency</h3>
+        <div class="stat-num">7.75 µs</div>
+        <h3 data-lang="en">Zero-Spill Hot-Path Latency</h3>
         <h3 data-lang="ko">초저지연 Hot-Path 실행</h3>
-        <p data-lang="en">85,000–120,000 protected calls/second (&lt; 0.15% of a 120Hz frame budget). Zero frame drops for real-time GUI, DSP, and rendering engines.</p>
-        <p data-lang="ko">초당 85,000~120,000회 호출 가능. 120Hz 고주사율 GUI, 오디오 플러그인(AU/VST3) 및 실시간 그래픽 엔진에서 프레임 저하 0%를 보장합니다.</p>
+        <p data-lang="en">~129,000 protected calls/second (0.186% of a 240Hz frame budget). Register-only inline assembly barriers (<code>__sc_rb</code>) prevent stack spills while defeating LLVM constant folding.</p>
+        <p data-lang="ko">초당 ~129,000회 호출 가능(240Hz 프레임 예산의 0.186%). 레지스터 전용 인라인 어셈블리 장벽(<code>__sc_rb</code>)으로 스택 오버헤드 없이 LLVM 상수 접힘을 차단합니다.</p>
       </div>
       <div class="card">
         <div class="stat-num">256 Salts</div>
-        <h3 data-lang="en">Dual-Tier SEP &amp; MBA Shattering</h3>
-        <h3 data-lang="ko">이중 SEP 결합 &amp; MBA 솔트 파편화</h3>
-        <p data-lang="en">Every handler unmasks its salt at runtime via <code>black_box</code> + <code>vm.anchor</code> MBA polynomials. Choose Portable All-Mac (<code>SCP1</code>) or Node-Locked Physical SEP UID (<code>--sep-lock</code>, 0 unsealable keys in binary).</p>
-        <p data-lang="ko">256개 핸들러가 런타임 <code>black_box</code> + <code>vm.anchor</code> 비선형 MBA 수식으로 솔트를 복원하며, 모든 Mac 호환 포터블 모드(<code>SCP1</code>)와 바이너리 내 키 0바이트 물리 귀속 모드(<code>--sep-lock</code>)를 모두 지원합니다.</p>
+        <h3 data-lang="en">Dual-Tier SEP &amp; Trajectory Masks</h3>
+        <h3 data-lang="ko">이중 SEP 결합 &amp; 궤적 마스킹</h3>
+        <p data-lang="en">Each handler unmasks operands using <code>h_salt</code>, <code>vm.anchor</code>, and live <code>(vm.sigma, vm.pc)</code>. Choose Portable All-Mac (<code>SCP1</code>) or Node-Locked Physical SEP UID (<code>--sep-lock</code>).</p>
+        <p data-lang="ko">256개 핸들러가 <code>h_salt</code>, <code>vm.anchor</code> 및 실시간 <code>(vm.sigma, vm.pc)</code> 상태 궤적으로 피연산자를 복원하며, 포터블 모드(<code>SCP1</code>)와 물리 귀속 모드(<code>--sep-lock</code>)를 모두 지원합니다.</p>
       </div>
       <div class="card">
         <div class="stat-num">330s+ T/O</div>
@@ -177,86 +176,79 @@
       </div>
     </section>
 
-    <section id="pricing" style="margin-top: 64px;">
-      <h2 style="text-align: center; font-size: 2rem; margin-bottom: 12px;" data-lang="en">Perpetual Commercial License · 0% Royalties</h2>
-      <h2 style="text-align: center; font-size: 2rem; margin-bottom: 12px;" data-lang="ko">영구 상용 라이선스 · 배포 로열티 0%</h2>
+    <section id="architecture" style="margin-top: 64px;">
+      <h2 style="text-align: center; font-size: 2rem; margin-bottom: 12px;" data-lang="en">Open-Source Compiler Architecture · MIT License</h2>
+      <h2 style="text-align: center; font-size: 2rem; margin-bottom: 12px;" data-lang="ko">오픈소스 컴파일러 아키텍처 · MIT 라이선스</h2>
       <p style="text-align: center; color: var(--muted); margin-bottom: 36px;" data-lang="en">
-        Ship unlimited protected binaries, macOS apps, and Rust crates worldwide with zero recurring royalties.
+        Inspect, audit, fork, and build the entire compiler pipeline directly from <code>src/</code> with zero external crate dependencies.
       </p>
       <p style="text-align: center; color: var(--muted); margin-bottom: 36px;" data-lang="ko">
-        scLock으로 보호한 상용 앱과 라이브러리는 추가 로열티(0원) 없이 전 세계에 무제한 판매·배포할 수 있습니다.
+        외부 크레이트 의존성 없이 순수 Rust로 구현된 전체 가상화 컴파일러 파이프라인(<code>src/</code>)을 직접 확인하고 빌드할 수 있습니다.
       </p>
 
       <div class="grid-3">
         <div class="card pricing-card">
           <div>
-            <h3>Indie Edition</h3>
-            <div class="price">$79 <span>/ one-time (perpetual)</span></div>
+            <h3>Frontend &amp; Polymorphic ISA</h3>
             <ul class="features" data-lang="en">
-              <li>For solo developers &amp; indie studios (&lt;$100k/yr)</li>
-              <li><code>sclock</code> macOS arm64 Commercial CLI</li>
-              <li>Protect C / C++ / Wasm standalone binaries</li>
-              <li><code>--emit-crate</code> Rust workspace crate generator</li>
-              <li>100% Royalty-Free commercial output distribution</li>
+              <li><code>src/wasm_frontend.rs</code>: C/C++/Wasm parser &amp; lifter</li>
+              <li><code>src/hir.rs</code>: Micro-block CFG shattering</li>
+              <li><code>src/isa.rs</code>: Per-build 256-slot ISA synthesis</li>
+              <li>172 real micro-op handlers + 84 Chaff traps</li>
             </ul>
             <ul class="features" data-lang="ko">
-              <li>1인 인디 개발자 및 소규모 팀 (&lt;$100k/년)</li>
-              <li><code>sclock</code> macOS arm64 상용 CLI 바이너리</li>
-              <li>C / C++ / Wasm 독립 실행 파일 보호</li>
-              <li><code>--emit-crate</code> Rust 크레이트 생성기</li>
-              <li>생성된 결과물 상용 배포 로열티 0%</li>
+              <li><code>src/wasm_frontend.rs</code>: C/C++/Wasm 파서 및 리프터</li>
+              <li><code>src/hir.rs</code>: 마이크로 블록 CFG 파편화</li>
+              <li><code>src/isa.rs</code>: 빌드별 256-슬롯 다형성 ISA 합성</li>
+              <li>172개 실제 마이크로 핸들러 + 84개 더미(Chaff) 함정</li>
             </ul>
           </div>
-          <a href="https://planners3.gumroad.com/l/sclock" class="btn btn-secondary" style="text-align:center;">Buy Indie Edition</a>
+          <a href="https://github.com/planners1490/sclock/tree/main/src" class="btn btn-secondary" style="text-align:center;">Browse src/</a>
         </div>
 
         <div class="card pricing-card featured">
           <div>
-            <div style="color: var(--accent); font-size: 0.8rem; font-weight: 700; margin-bottom: 4px;">MOST POPULAR</div>
-            <h3>Studio Edition</h3>
-            <div class="price">$249 <span>/ one-time (perpetual)</span></div>
+            <div style="color: var(--success); font-size: 0.8rem; font-weight: 700; margin-bottom: 4px;">100% OPEN SOURCE (MIT)</div>
+            <h3>MBA &amp; Sponge Cryptography</h3>
             <ul class="features" data-lang="en">
-              <li>For startups &amp; commercial software studios</li>
-              <li>Unlimited macOS build machines &amp; CI/CD runners</li>
-              <li><code>sclock protect-app</code> 1-click <code>.app</code> stealth sealer</li>
-              <li><code>sclock verify</code> 5-point security audit report</li>
-              <li>Includes 1 year of major polymorphic ISA updates</li>
+              <li><code>src/mba.rs</code>: &Zopf;<sub>2<sup>64</sup></sub> bijections &amp; <code>__sc_rb</code> barriers</li>
+              <li><code>src/sponge.rs</code>: 256-bit state-dependent sponge</li>
+              <li>Trajectory-entangled <code>(vm.sigma, vm.pc)</code> masks</li>
+              <li>One-way Davies-Meyer <code>ANCHOR_SHARDS</code></li>
             </ul>
             <ul class="features" data-lang="ko">
-              <li>스타트업 및 상용 소프트웨어 스튜디오 무제한</li>
-              <li>CI/CD 빌드 서버(GitHub Actions 등) 무제한 탑재</li>
-              <li><code>sclock protect-app</code> 앱 번들 자동 스텔스 서명</li>
-              <li><code>sclock verify</code> 5단계 보안 감사 리포트</li>
-              <li>1년 메이저 다형성 ISA 엔진 업데이트 포함</li>
+              <li><code>src/mba.rs</code>: &Zopf;<sub>2<sup>64</sup></sub> 비선형 MBA 및 <code>__sc_rb</code> 장벽</li>
+              <li><code>src/sponge.rs</code>: 256비트 상태 의존적 스폰지 암호화</li>
+              <li>실행 궤적 <code>(vm.sigma, vm.pc)</code> 결합 피연산자 마스킹</li>
+              <li>비가역 단방향 Davies-Meyer <code>ANCHOR_SHARDS</code></li>
             </ul>
           </div>
-          <a href="https://planners3.gumroad.com/l/sclock" class="btn btn-primary" style="text-align:center;">Buy Studio Edition</a>
+          <a href="https://github.com/planners1490/sclock" class="btn btn-primary" style="text-align:center;">Clone on GitHub</a>
         </div>
 
         <div class="card pricing-card">
           <div>
-            <h3>Enterprise Custom</h3>
-            <div class="price">$990+ <span>/ custom deployment</span></div>
+            <h3>Apple SEP &amp; Stealth Codegen</h3>
             <ul class="features" data-lang="en">
-              <li>Dedicated custom MBA polynomial generator seeds</li>
-              <li>Custom hardware attestation &amp; license server hooks</li>
-              <li>Priority C++ / Rust / Swift architecture integration</li>
-              <li>Formal security &amp; stealth audit certification</li>
+              <li><code>src/sep_bridge.rs</code>: Portable <code>SCP1</code> &amp; <code>--sep-lock</code></li>
+              <li><code>src/codegen.rs</code>: Dispatcherless ARM64 handlers</li>
+              <li><code>--emit-crate</code> Cargo workspace generator</li>
+              <li><code>sclock protect-app</code> &amp; <code>sclock verify</code> auditor</li>
             </ul>
             <ul class="features" data-lang="ko">
-              <li>기업 전용 커스텀 MBA 대수 생성기 시드 고정</li>
-              <li>전용 하드웨어 엔클레이브 / 라이선스 서버 연동</li>
-              <li>기존 C++/Rust/Swift 대규모 앱 통합 기술 지원</li>
-              <li>맞춤형 보안 감사 성적서 발급</li>
+              <li><code>src/sep_bridge.rs</code>: 포터블 <code>SCP1</code> 및 <code>--sep-lock</code></li>
+              <li><code>src/codegen.rs</code>: 무디스패처 256 핸들러 코드 생성</li>
+              <li><code>--emit-crate</code> Rust 워크스페이스 크레이트 생성</li>
+              <li><code>sclock protect-app</code> 및 <code>sclock verify</code> 감사기</li>
             </ul>
           </div>
-          <a href="https://github.com/planners1490/sclock/issues" class="btn btn-secondary" style="text-align:center;">Contact relay</a>
+          <a href="https://github.com/planners1490/sclock/issues/1" class="btn btn-secondary" style="text-align:center;">Join CrackMe Thread</a>
         </div>
       </div>
     </section>
 
     <footer style="margin-top: 72px; padding-top: 28px; border-top: 1px solid var(--border); text-align: center; color: var(--muted); font-size: 0.88rem;">
-      © 2026 <strong>relay</strong>. All rights reserved. · Built with scLock Supercluster Defense Architecture.
+      © 2026 <strong>relay</strong>. Released under the Open-Source MIT License · <a href="https://github.com/planners1490/sclock" style="color: var(--accent);">github.com/planners1490/sclock</a>
     </footer>
   </div>
 </body>

@@ -1,0 +1,11 @@
+[package]
+name = "sclock-self-guard"
+version = "1.0.0"
+authors = ["relay"]
+edition = "2021"
+license = "LicenseRef-scLock-Commercial"
+description = "scLock (by relay) Supercluster Polymorphic MBA Sponge VM & Apple Secure Enclave Guard"
+build = "build.rs"
+
+[lints.rust]
+unsafe_code = "allow"

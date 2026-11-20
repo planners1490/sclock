@@ -1,0 +1,27 @@
+[package]
+name = "sclock"
+version = "1.0.0"
+authors = ["relay"]
+edition = "2021"
+license = "MIT"
+repository = "https://github.com/planners1490/sclock"
+homepage = "https://planners1490.github.io/sclock/"
+description = "scLock (Supercluster Lock) by relay: Open-Source 256-Slot Polymorphic VM, Non-Linear MBA & Apple Secure Enclave Binary Protector for macOS arm64"
+
+[[bin]]
+name = "sclock"
+path = "src/main.rs"
+
+[features]
+default = ["self-guard"]
+self-guard = ["dep:sclock-self-guard"]
+
+[dependencies]
+sclock-self-guard = { path = "crates/sclock-self-guard", optional = true }
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+strip = "symbols"
+panic = "abort"
