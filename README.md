@@ -11,6 +11,7 @@
 *Developed by **relay** (`relay // SYSTEMS`) · Released under the **MIT License***
 
 [![License: MIT](https://img.shields.io/badge/License-MIT%20(Open%20Source)-22C55E?style=for-the-badge)](LICENSE)
+[![Audited with AREA](https://img.shields.io/badge/Audited%20with-AREA%20(Anti--REA%20Skill)-A855F7?style=for-the-badge)](https://github.com/planners1490/area)
 [![Platform: macOS arm64](https://img.shields.io/badge/Platform-macOS%20arm64%20(Apple%20Silicon)-111111?style=for-the-badge&logo=apple)](#quick-start--build-from-source)
 [![Hot-Path Latency: 7.75 µs](https://img.shields.io/badge/Hot--Path%20Latency-7.75%20%C2%B5s%20(~129k%20ops%2Fs)-38BDF8?style=for-the-badge)](#empirical-benchmarks)
 [![Ghidra Decompiler: >330s Timeout](https://img.shields.io/badge/Ghidra%20Decompiler-%3E330s%20Timeout%20(Blocked)-15803D?style=for-the-badge)](#empirical-benchmarks)
@@ -153,6 +154,8 @@ Open `crackme/challenge_protected` in **Ghidra**, **IDA Pro**, **Binary Ninja**,
 3. Find the hidden secondary 4-digit master PIN (`arg2 != 1234`) and the exact 64-bit algebraic mixing constants inside the virtualized routine.
 
 Found an interesting analysis or write-up? Post it in [Issue #1 (Official CrackMe Challenge Thread)](https://github.com/planners1490/sclock/issues/1)!
+
+> **Automated Anti-REA Verification**: Want to audit `scLock` binaries (or any other obfuscated Mach-O / ELF / PE binary) automatically with **Codex**, **Claude Code**, or **Antigravity**? Check out our companion open-source AI skill **[`AREA` (Anti-Reverse Engineering Anything)](https://github.com/planners1490/area)**.
 
 ---
 
